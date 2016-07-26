@@ -35,18 +35,17 @@ class animations extends Component {
     ).start(() => this.spin())
   }
   render () {
-    const getStartValue = () => '0deg'
-    const getEndValue = () => '360deg'
+    // const getStartValue = () => '0deg'
+    // const getEndValue = () => '360deg'
+    // const spin = this.spinValue.interpolate({
+    //   inputRange: [0, 1],
+    //   outputRange: [getStartValue(), getEndValue()]
+    // })
+    /* This also works, just using above example to show functions instead of strings */
     const spin = this.spinValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [getStartValue(), getEndValue()]
+      outputRange: ['0deg', '360deg']
     })
-    /* This also works, just using above example to show functions instead of strings /*
-    /*
-    const spin = this.state.spinValue.interpolate({
-       inputRange: [0, 1],
-       outputRange: ['0deg', '360deg']
-    }) */
     return (
       <Animated.View style={styles.container}>
         <Animated.Image
