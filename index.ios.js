@@ -4,57 +4,30 @@
  * @flow
  */
 
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
-  View,
-  Animated,
-  Image,
-  Easing
-} from 'react-native'
+  Text,
+  View
+} from 'react-native';
 
 class animations extends Component {
-  constructor () {
-    super()
-    this.state = {
-      spinValue: new Animated.Value(0)
-    }
-  }
-  componentDidMount () {
-    this.spin()
-  }
-  spin () {
-    this.state.spinValue.setValue(0)
-    Animated.timing(
-      this.state.spinValue,
-      {
-        toValue: 1,
-        duration: 4000,
-        easing: Easing.linear
-      }
-    ).start(() => this.spin())
-  }
-  render () {
-    const getStartValue = () => '0deg'
-    const getEndValue = () => '360deg'
-    const spin = this.state.spinValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [getStartValue(), getEndValue()]
-    })
-    /* This also works, just using above example to show functions instead of strings /*
-    /*
-    const spin = this.state.spinValue.interpolate({
-       inputRange: [0, 1],
-       outputRange: ['0deg', '360deg']
-    }) */
+  render() {
     return (
-      <Animated.View style={styles.container}>
-        <Animated.Image
-          style={{ width: 227, height: 200, transform: [{rotate: spin}] }}
-          source={{uri: 'https://s3.amazonaws.com/media-p.slid.es/uploads/alexanderfarennikov/images/1198519/reactjs.png'}}/>
-      </Animated.View>
-    )
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          Welcome to React Native!
+        </Text>
+        <Text style={styles.instructions}>
+          To get started, edit index.ios.js
+        </Text>
+        <Text style={styles.instructions}>
+          Press Cmd+R to reload,{'\n'}
+          Cmd+D or shake for dev menu
+        </Text>
+      </View>
+    );
   }
 }
 
@@ -63,19 +36,18 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF'
+    backgroundColor: '#F5FCFF',
   },
   welcome: {
-    fontSize: 28,
+    fontSize: 20,
     textAlign: 'center',
-    margin: 10
+    margin: 10,
   },
   instructions: {
     textAlign: 'center',
     color: '#333333',
-    fontSize: 19,
-    marginBottom: 5
-  }
-})
+    marginBottom: 5,
+  },
+});
 
-AppRegistry.registerComponent('animations', () => animations)
+AppRegistry.registerComponent('animations', () => animations);
