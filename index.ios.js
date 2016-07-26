@@ -15,6 +15,8 @@ import {
   Easing
 } from 'react-native'
 
+const timing = 4000
+
 class animations extends Component {
   constructor () {
     super()
@@ -29,19 +31,19 @@ class animations extends Component {
       this.spinValue,
       {
         toValue: 1,
-        duration: 4000,
+        duration: timing,
         easing: Easing.linear
       }
     ).start(() => this.spin())
   }
   render () {
+    /* This also works, to show functions instead of strings */
     // const getStartValue = () => '0deg'
     // const getEndValue = () => '360deg'
     // const spin = this.spinValue.interpolate({
     //   inputRange: [0, 1],
     //   outputRange: [getStartValue(), getEndValue()]
     // })
-    /* This also works, just using above example to show functions instead of strings */
     const spin = this.spinValue.interpolate({
       inputRange: [0, 1],
       outputRange: ['0deg', '360deg']
