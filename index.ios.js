@@ -8,6 +8,7 @@ import React, { Component } from 'react'
 import {
   AppRegistry,
   StyleSheet,
+  Text,
   View,
   Animated,
   Image,
@@ -17,17 +18,15 @@ import {
 class animations extends Component {
   constructor () {
     super()
-    this.state = {
-      spinValue: new Animated.Value(0)
-    }
+    this.spinValue = new Animated.Value(0)
   }
   componentDidMount () {
     this.spin()
   }
   spin () {
-    this.state.spinValue.setValue(0)
+    this.spinValue.setValue(0)
     Animated.timing(
-      this.state.spinValue,
+      this.spinValue,
       {
         toValue: 1,
         duration: 4000,
@@ -38,7 +37,7 @@ class animations extends Component {
   render () {
     const getStartValue = () => '0deg'
     const getEndValue = () => '360deg'
-    const spin = this.state.spinValue.interpolate({
+    const spin = this.spinValue.interpolate({
       inputRange: [0, 1],
       outputRange: [getStartValue(), getEndValue()]
     })
