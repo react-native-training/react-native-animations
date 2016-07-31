@@ -1,9 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react'
 import {
   AppRegistry,
@@ -11,47 +5,31 @@ import {
   Text,
   View,
   Animated,
-  Image,
-  Easing
+  Image
 } from 'react-native'
-
-const timing = 4000
 
 class animations extends Component {
   constructor () {
     super()
-    this.spinValue = new Animated.Value(0)
+    this.springValue = new Animated.Value(0.3)
   }
-  componentDidMount () {
-    this.spin()
-  }
-  spin () {
-    this.spinValue.setValue(0)
-    Animated.timing(
-      this.spinValue,
+  spring () {
+    this.springValue.setValue(0.3)
+    Animated.spring(
+      this.springValue,
       {
         toValue: 1,
-        duration: timing,
-        easing: Easing.linear
+        friction: 1,
+        tension: 1
       }
-    ).start(() => this.spin())
+    ).start()
   }
   render () {
-    /* This also works, to show functions instead of strings */
-    // const getStartValue = () => '0deg'
-    // const getEndValue = () => '360deg'
-    // const spin = this.spinValue.interpolate({
-    //   inputRange: [0, 1],
-    //   outputRange: [getStartValue(), getEndValue()]
-    // })
-    const spin = this.spinValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: ['0deg', '360deg']
-    })
     return (
       <View style={styles.container}>
+        <Text style={{marginBottom: 100}} onPress={this.spring.bind(this)}>Spring</Text>
         <Animated.Image
-          style={{ width: 227, height: 200, transform: [{rotate: spin}] }}
+          style={{ width: 227, height: 200, transform: [{scale: this.springValue}] }}
           source={{uri: 'https://s3.amazonaws.com/media-p.slid.es/uploads/alexanderfarennikov/images/1198519/reactjs.png'}}/>
       </View>
     )
