@@ -8,52 +8,52 @@ import React, { Component } from 'react'
 import {
   AppRegistry,
   StyleSheet,
+  Text,
   View,
   Animated,
   Image,
   Easing
 } from 'react-native'
 
+const timing = 4000
+
 class animations extends Component {
   constructor () {
     super()
-    this.state = {
-      spinValue: new Animated.Value(0)
-    }
+    this.spinValue = new Animated.Value(0)
   }
   componentDidMount () {
     this.spin()
   }
   spin () {
-    this.state.spinValue.setValue(0)
+    this.spinValue.setValue(0)
     Animated.timing(
-      this.state.spinValue,
+      this.spinValue,
       {
         toValue: 1,
-        duration: 4000,
+        duration: timing,
         easing: Easing.linear
       }
     ).start(() => this.spin())
   }
   render () {
-    const getStartValue = () => '0deg'
-    const getEndValue = () => '360deg'
-    const spin = this.state.spinValue.interpolate({
+    /* This also works, to show functions instead of strings */
+    // const getStartValue = () => '0deg'
+    // const getEndValue = () => '360deg'
+    // const spin = this.spinValue.interpolate({
+    //   inputRange: [0, 1],
+    //   outputRange: [getStartValue(), getEndValue()]
+    // })
+    const spin = this.spinValue.interpolate({
       inputRange: [0, 1],
-      outputRange: [getStartValue(), getEndValue()]
+      outputRange: ['0deg', '360deg']
     })
-    /* This also works, just using above example to show functions instead of strings /*
-    /*
-    const spin = this.state.spinValue.interpolate({
-       inputRange: [0, 1],
-       outputRange: ['0deg', '360deg']
-    }) */
     return (
-      <Animated.View style={styles.container}>
+      <View style={styles.container}>
         <Animated.Image
           style={{ width: 227, height: 200, transform: [{rotate: spin}] }}
           source={{uri: 'https://s3.amazonaws.com/media-p.slid.es/uploads/alexanderfarennikov/images/1198519/reactjs.png'}}/>
-      </Animated.View>
+      </View>
     )
   }
 }
@@ -62,19 +62,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
-  },
-  welcome: {
-    fontSize: 28,
-    textAlign: 'center',
-    margin: 10
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    fontSize: 19,
-    marginBottom: 5
+    alignItems: 'center'
   }
 })
 
