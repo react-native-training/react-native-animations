@@ -1,59 +1,37 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react'
 import {
   AppRegistry,
   StyleSheet,
+  Text,
   View,
   Animated,
-  Image,
-  Easing
+  Image
 } from 'react-native'
 
 class animations extends Component {
   constructor () {
     super()
-    this.state = {
-      spinValue: new Animated.Value(0)
-    }
+    this.springValue = new Animated.Value(0.3)
   }
-  componentDidMount () {
-    this.spin()
-  }
-  spin () {
-    this.state.spinValue.setValue(0)
-    Animated.timing(
-      this.state.spinValue,
+  spring () {
+    this.springValue.setValue(0.3)
+    Animated.spring(
+      this.springValue,
       {
         toValue: 1,
-        duration: 4000,
-        easing: Easing.linear
+        friction: 1,
+        tension: 1
       }
-    ).start(() => this.spin())
+    ).start()
   }
   render () {
-    const getStartValue = () => '0deg'
-    const getEndValue = () => '360deg'
-    const spin = this.state.spinValue.interpolate({
-      inputRange: [0, 1],
-      outputRange: [getStartValue(), getEndValue()]
-    })
-    /* This also works, just using above example to show functions instead of strings /*
-    /*
-    const spin = this.state.spinValue.interpolate({
-       inputRange: [0, 1],
-       outputRange: ['0deg', '360deg']
-    }) */
     return (
-      <Animated.View style={styles.container}>
+      <View style={styles.container}>
+        <Text style={{marginBottom: 100}} onPress={this.spring.bind(this)}>Spring</Text>
         <Animated.Image
-          style={{ width: 227, height: 200, transform: [{rotate: spin}] }}
+          style={{ width: 227, height: 200, transform: [{scale: this.springValue}] }}
           source={{uri: 'https://s3.amazonaws.com/media-p.slid.es/uploads/alexanderfarennikov/images/1198519/reactjs.png'}}/>
-      </Animated.View>
+      </View>
     )
   }
 }
@@ -62,19 +40,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
-  },
-  welcome: {
-    fontSize: 28,
-    textAlign: 'center',
-    margin: 10
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    fontSize: 19,
-    marginBottom: 5
+    alignItems: 'center'
   }
 })
 
