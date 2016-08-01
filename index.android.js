@@ -9,45 +9,60 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
-} from 'react-native';
+  View,
+  Animated
+} from 'react-native'
+
+const arr = []
+for (var i = 0; i < 500; i++) {
+  arr.push(i)
+}
 
 class animations extends Component {
-  render() {
+
+  constructor () {
+    super()
+    this.animatedValue = []
+    arr.forEach((value) => {
+      this.animatedValue[value] = new Animated.Value(0)
+    })
+  }
+
+  componentDidMount () {
+    this.animate()
+  }
+
+  animate () {
+    const animations = arr.map((item) => {
+      return Animated.timing(
+        this.animatedValue[item],
+        {
+          toValue: 1,
+          duration: 50
+        }
+      )
+    })
+    Animated.sequence(animations).start()
+  }
+
+  render () {
+    const animations = arr.map((a, i) => {
+      return <Animated.View key={i} style={{opacity: this.animatedValue[a], height: 20, width: 20, backgroundColor: 'red', marginLeft: 3, marginTop: 3}} />
+    })
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+        {animations}
       </View>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+    flexDirection: 'row',
+    flexWrap: 'wrap'
+  }
+})
 
 AppRegistry.registerComponent('animations', () => animations);
